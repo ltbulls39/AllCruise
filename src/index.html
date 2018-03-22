@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script>
+    $( document ).ready(function() {
+        console.log( "document loaded" );
+
+		var counter = 0;
+		
+		//var list = ["Hello world", "Cruise day huh", "Nice weather out", "Sounds good"];
+		var list = ["obj: #cruise;", "obj: #surfboard;","obj: #ObjGlasses",]
+		var scaleAttr = ["0.20 0.20 0.20", "0.03 0.03 0.03","0.02 0.02 0.02"]
+		var colorList = ["color: white; opacity: .85", "color: #0e81b2; opacity: .85", "color: orange; opacity: .85"]
+		var possition = ["0 0.5 0","0 0.5 0","0 0.5 0"]
+		var promoCodes = ["#GetCruisin", "#LiveFree", "#Fearless", "#HikeOn", "#TravelLife"]
+
+		$("#my_bod").click(function(e) {
+			var random = Math.floor(Math.random() * 5)
+			var middleBorder = screen.width / 2;
+			var posX = e.clientX;
+			
+			if(posX >= middleBorder) {
+				counter++;
+				if(counter == list.length)	counter = 0;
+				// TODO change this line to...
+				 $("a-entity").attr("obj-model", list[counter]);
+				 $("a-entity").attr("scale", scaleAttr[counter]);
+				 $("a-entity").attr("position", possition[counter]);
+				 $("a-entity").attr("material", colorList[counter]);
+				 $("a-text").attr("value", promoCodes[random]);
+					//$("a-text").attr("value", list[counter]);
+				
+			}
+
+			if(posX < middleBorder) {
+				counter--;
+				if(counter < 0)		counter = list.length - 1;
+				// TODO change this line to...
+				 $("a-entity").attr("obj-model", list[counter]);
+				 $("a-entity").attr("scale", scaleAttr[counter]);
+				 $("a-entity").attr("position", possition[counter]);
+				 $("a-entity").attr("material", colorList[counter]);
+				 $("a-text").attr("value", promoCodes[random]);
+				//	$("a-text").attr("value", list[counter]);
+				
+			}
+			e.preventDefault();
+			e.stopPropagation();
+			return false;
+		});
+
+    });
+	
+ 
+    </script>
+
+<script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
+<script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"> </script>
+<body id="my_bod" style='margin : 0px; overflow: hidden;'>
+     <a-scene embedded arjs='sourceType: webcam; debugUIEnabled: false'>
+    <a-assets>
+      <a-asset-item id="cruise" src="https://flask-furcam.c9users.io/CRUISE3.obj"></a-asset-item>
+      <a-asset-item id="cruiseMTL" src="https://flask-furcam.c9users.io/CRUISE3.mtl"></a-asset-item>
+      
+      <a-asset-item id="surfboard" src="https://flask-furcam.c9users.io/surfboard.obj"></a-asset-item>
+      <a-asset-item id="surfboardMTL" src="https://flask-furcam.c9users.io/surfboard.mtl"></a-asset-item>
+      
+      <a-asset-item id="ObjGlasses" src="https://flask-furcam.c9users.io/ObjGlasses.obj"></a-asset-item>
+      <!--<a-asset-item id="ObjGlasses" src="https://flask-furcam.c9users.io/MirrorBall.mtl"></a-asset-item>-->
+      
+      <a-asset-item id="surfboard" src="https://flask-furcam.c9users.io/02.OBJ"></a-asset-item>
+      
+      
+      
+    </a-assets>
+    <a-anchor >
+    
+      <a-entity obj-model="obj: #cruise" material="color: #ffffff; opacity: .85" position='0 0.5 0' scale=".2 .2 .2">
+      <a-animation attribute="rotation" to="0 360 0" dur="10000" easing='linear' repeat="indefinite"></a-animation> 
+       <!--<a-animation attribute="scale" delay="0" dur="3000" to="0.25 0.25 0.25" direction="alternate" repeat="indefinite"></a-animation>-->
+      </a-entity>
+      
+      <a-text color="white" position="-.8 1.8 -.5" value="#GetCruisin'"></a-text>
+    </a-anchor>
+    <a-camera-static/>
+    
+  </a-scene>
+</body>
